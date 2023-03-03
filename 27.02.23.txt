@@ -1,0 +1,234 @@
+03.03.23 HW:
+
+SELECT Country
+FROM Customers
+
+SELECT DISTINCT Country
+FROM Customers
+
+SELECT FirstName 
+FROM [Employees]
+
+
+SELECT LastName, FirstName
+FROM [Employees]
+
+SELECT CustomerName
+FROM Customers
+WHERE Country='Germany'
+
+SELECT CustomerName
+FROM Customers
+WHERE NOT Country='Germany'
+
+SELECT *
+FROM [Products]
+WHERE Price <= 20
+
+Задача
+	- Вывести Товары с ценой от 20 до 50 (EURO)
+
+SELECT 
+	ProductName,
+	Price AS Price_eur
+	Price*1.06 AS Price_usd
+FROM Products
+
+
+_______________________________
+
+Примеры запросов с оператором SELECT:
+
+SELECT Country, CustomerName
+FROM Customers
+
+SELECT *
+FROM Customers
+WHERE Country='Germany'
+
+SELECT *
+FROM Customers
+WHERE City='Berlin'
+
+SELECT *
+FROM Customers
+WHERE CustomerName = ...
+
+SELECT * FROM [Customers]
+WHERE CustomerName = "Alfreds Futterkiste"
+
+SELECT *
+FROM Customers
+WHERE CustomerID=’N’ - your customer ID
+
+
+SELECT *
+FROM Customers
+WHERE CustomerID=1
+
+SELECT *
+FROM Customers
+WHERE Country!='Germany'
+
+SELECT *
+FROM Customers
+WHERE Country!='Germany'
+
+SELECT * 
+FROM Products
+WHERE Price <= 20
+
+SELECT *
+FROM Customers
+WHERE NOT Country='Germany'
+
+SELECT *
+FROM Products
+WHERE Price >= 20 AND Price <= 50
+
+SELECT *
+FROM Products
+WHERE Price BETWEEN 20 AND 50
+
+SELECT *
+FROM Products
+WHERE NOT Price > 200 AND Price < 500
+
+Задача
+	- Вывести все товары, за искл. тех, у которых цена от 200 до 500
+
+SELECT *
+FROM Products
+WHERE Price NOT BETWEEN 200 AND 500
+
+Задача
+	- Вывести все три самых дорогих товара
+
+SELECT *
+FROM Products
+ORDER BY Price DESC
+LIMIT 3
+
+SELECT *
+FROM Products
+ORDER BY Price ASC
+LIMIT 5
+____________________________
+
+1. Вывести все товары в диапазоне цены от 10 до 100, отсортированные по названию:
+
+SELECT *
+FROM Products
+WHERE Price BETWEEN 10 AND 100
+ORDER BY ProductName
+
+2. Для клиентов не из Германии и не из Франции очистить адрес:
+
+UPDATE Customers
+SET Address=''
+WHERE NOT Country IN ('Germany', 'France')
+
+3. Удалить (безвозвратно) клиентов из 'USA':
+
+DELETE FROM Customers
+WHERE Country='USA'
+
+4. Вывести всех поставщиков (suppliers) из Токио, Япония, отсортированные по имени:
+
+SELECT * FROM [Suppliers]
+WHERE City='Tokio', ''
+ORDER BY Price ASC 
+*(по возрастанию)
+
+5. Вывести товары из категорий 1 и 5 с ценой до 20 EURO с сортировкой по возрастанию цены:
+ 
+
+
+____________________________
+
+SELECT *
+FROM Customers
+WHERE Country='Germany' OR Country='France'
+
+Эти два одинаковые 
+
+SELECT *
+FROM Customers
+WHERE Country='Germany' OR Country='France' OR Country='USA' OR Country='UK'
+
+
+SELECT *
+FROM Customers
+WHERE Country IN ('Germany', 'France', 'USA', 'UK')
+
+SELECT *
+FROM Products
+WHERE CategoryID IN (1, 2, 5)
+
+SELECT *
+FROM Products
+WHERE Price BETWEEN 20 AND 50
+-- WHERE Price >= 20 AND Price <= 50
+
+SELECT *
+FROM Products
+WHERE NOT Price BETWEEN 20 AND 50
+(where not - не равно)  
+
+SELECT *
+FROM Products
+WHERE NOT Price BETWEEN 20 AND 50
+ORDER BY Price DESC 
+(по убыванию)
+
+SELECT *
+FROM Products
+WHERE NOT Price BETWEEN 20 AND 50
+ORDER BY Price ASC 
+*(по возрастанию)
+
+SELECT *
+FROM Products
+WHERE NOT Price BETWEEN 20 AND 50
+ORDER BY Price, CategoryID
+(сразу 2)
+
+SELECT *
+FROM Products
+WHERE NOT Price BETWEEN 20 AND 50
+ORDER BY Price DESC, CategoryID ASC
+
+SELECT *
+FROM Products
+WHERE NOT Price BETWEEN 20 AND 50
+ORDER BY Price DESC
+LIMIT 10
+
+UPDATE Customers
+SET ContactName='Andrei'
+WHERE CustomerID=1
+
+UPDATE Customers
+SET ContactName='Andrei', Address='new'
+WHERE CustomerID=1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
