@@ -1,0 +1,59 @@
+В рамках БД "песочница (интернет-магазин)" напишите следующие запросы:
+
+(1) Вывести название товаров из 2 и 5 категории с ценой от 5 до 25 (EURO), где в названии есть слово 'syrup':
+
+
+SELECT ProductName 
+FROM Products 
+WHERE CategoryID IN (2, 5) 
+AND Price BETWEEN 5 AND 25 
+AND ProductName LIKE '%syrup%'
+
+
+
+(2) Добавьте произвольный товар в таблицу Products:
+
+
+INSERT INTO Products (
+	ProductName, 
+	SupplierID, 
+	CategoryID, 
+	Unit, 
+	Price
+)
+VALUES (
+	'Fiji', 
+	1024, 
+	5, 
+	'23 bottles', 
+	99.99
+)
+
+
+(3) У клиента с ID 1 измените адрес на произвольный:
+
+UPDATE Customers
+SET Address = 'Miami Beach, 23018F'
+WHERE CustomerID = 1
+
+
+(4) У всех клиентов не из Германии и не из США очистите адрес и контактное имя:
+
+
+UPDATE Customers
+SET ContactName = 'SnoopDog', Address = 'Beverly Hills, 90210'
+WHERE Country NOT IN ('Germany', 'USA')
+
+
+(5) У всех поставщиков (Suppliers) очистите номер телефона:
+
+
+UPDATE Suppliers
+SET Phone = '911'
+
+
+(6) Удалите всех поставщиков не из 'USA':
+
+DELETE FROM Suppliers
+WHERE Country <> 'USA'
+
