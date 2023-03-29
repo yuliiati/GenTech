@@ -1,0 +1,22 @@
+			GENTECH HW:
+
+1. create table if not exists reactions (
+ stream_id int,
+ created_at datetime default current_timestamp, -- когда поставлена оценка
+ reaction_id int primary key auto_increment,
+ user_id int, -- кто поставил оценку
+ value int check (value between 1 and 5), -- оценка за стрим
+ FOREIGN KEY (user_id) REFERENCES users(user_id), -- привязка к users
+ FOREIGN KEY (stream_id) REFERENCES streams(stream_id) -- привязка к stream
+);
+
+
+2. create table if not exists donations (
+	donation_id integer primary key auto_increment,
+	created_at datetime default current_timestamp,
+	donator_id integer,
+	stream_id integer,
+	amount decimal(10, 2) check (amount > 0), -- 10 - сумма до запятой, 2 - после 1000,00$
+	FOREIGN KEY (donator_id) REFERENCES users(user_id), -- проверка на сущ. ПОЛЬЗОВАТЕЛЯ
+	FOREIGN KEY (stream_id) REFERENCES streams(stream_id) -- проверка сущ. СТРИМА
+);
