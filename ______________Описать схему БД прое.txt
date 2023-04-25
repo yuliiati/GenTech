@@ -1,0 +1,75 @@
+______________Описать схему БД проекта "Продажа билетов в кино"__________________________
+
+
+1. Пример таблиц:
+
+Table users {
+  user_id int [primary key]
+  name varchar(255)
+  email varchar(255)
+  password varchar(255)
+  phone varchar(20)
+  address varchar(255)
+  created_at timestamp
+}
+
+Table movies {
+  movie_id int [primary key]
+  title varchar(255)
+  description text [note: 'Description of the movie']
+  poster_url varchar(255)
+  duration int
+  rating decimal(3,1)
+}
+
+Table halls {
+  hall_id int [primary key]
+  name varchar(255)
+  seats_count int
+  vip_seats_count int
+}
+
+Table timetable {
+  timetable_id int [primary key]
+  movie_id int [ref: > movies.movie_id]
+  hall_id int [ref: > halls.hall_id]
+  start_time datetime
+  price decimal(6,2)
+  vip_price decimal(6,2)
+}
+
+Table tickets {
+  tickets_id int [primary key]
+  paid boolean
+  timetable_id int [ref: > timetable.timetable_id]
+  seat_number int
+  user_id int [ref: > users.user_id]
+  discount_id int [ref: > discounts.discount_id]
+}
+
+Table discounts {
+  discount_id int [primary key]
+  amount decimal(6,2)
+  description text [note: 'Description of the discount']
+}
+
+2. Связи между таблицами:
+
+    movie_id int [ref: > movies.movie_id]
+     hall_id int [ref: > halls.hall_id]
+timetable_id int [ref: > timetable.timetable_id]
+     user_id int [ref: > users.user_id]
+ discount_id int [ref: > discounts.discount_id]
+
+				1:M
+tickets.timetable_id (M:1) timetable.timetable_id
+     tickets.user_id (M:1) users.user_id 
+ tickets.discount_id (M:1) discounts.discount_id
+  timetable.movie_id (M:1) movies.movie_id
+   timetable.hall_id (M:1) hall.hall_id
+
+// - У каждого сеанса (`timetable`) есть связь с фильмом (`movies`) и залом (`halls`) - 1 : 1
+// - У каждого билета (`tickets`) есть связь с сеансом (`timetable`) и пользователем (`users`) - 1 : 1
+// - У каждого билета (`tickets`) может быть связь со скидкой (`discounts`) - 1 : м (так как у нескольких билетов может быть одна и та же скидка)
+
+
