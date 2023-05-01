@@ -1,0 +1,57 @@
+HW 17.04	
+
+В рамках БД "песочница" напишите след/запросы:
+
+
+(1) вывести название товаров из 2 и 5 категории с ценой от 5 до 25 (EURO), где в названии есть слово 'syrup'
+
+SELECT ProductName
+FROM Products
+WHERE CategoryID IN (2, 5)
+  AND ProductName LIKE '%syrup%'
+  AND Price BETWEEN 5 AND 25
+ORDER BY ProductName;
+
+
+(2) добавьте произвольный товар в таблицу Products
+
+INSERT INTO Products (ProductName, SupplierID, CategoryID, Unit, Price)
+VALUES ('Lemon Juice', 1, 2, '12 cans', 10.99);
+
+
+
+(3) у клиента с ID 1 измените адрес на произвольный
+
+UPDATE Customers
+SET Address = '123 Main St, Miami Florida, 90210'
+WHERE CustomerID = 1;
+
+
+(4) у всех клиентов не из Германии и не из США очистите адрес и контактное имя
+
+UPDATE Customers
+SET Address = '',
+    ContactName = ''
+WHERE Country NOT IN ('Germany', 'USA');
+
+
+(5) у всех поставщиков (Suppliers) очистите номер телефона
+
+UPDATE Suppliers
+SET Phone = '';
+
+
+(6) вывести ко-во поставщиков не из 'USA'
+
+SELECT COUNT(*) AS NumSuppliers
+FROM Suppliers
+WHERE Country <> 'USA';
+
+
+(7) вывести ко-во и среднюю стоимость товаров из второй категории
+
+SELECT 
+	COUNT(*) AS NumProducts, 
+      AVG(Price) AS AvgPrice
+FROM Products
+WHERE CategoryID = 2;
