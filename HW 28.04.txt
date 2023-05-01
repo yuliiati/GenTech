@@ -1,0 +1,36 @@
+HW 28.04
+
+В рамках БД 'platform' написать след/запросы:
+
+
+1. Вывести количественное распределение оценок (реакций) по стриму №1.
+_______________________________________________________________________
+
+SELECT 
+	users.fullname, 
+    COUNT(*) AS reaction_count
+FROM streams
+JOIN users ON streams.user_id = users.user_id
+WHERE streams.stream_id = 1
+GROUP BY users.fullname;
+
+
+2. Вывести список стран, откуда идут пожертвования.
+______________________________________________________
+
+SELECT
+	users.country
+FROM donations
+LEFT JOIN users ON
+	users.user_id = donations.donator_id;
+
+
+3. Вывести сумму и ко-во всех полученных пожертвований стримером №1 
+____________________________________________________________________
+
+SELECT 
+	SUM(donations.amount) AS total_donations, 
+    COUNT(*) AS donations_count
+FROM donations
+JOIN users ON donations.donator_id = users.user_id
+WHERE users.user_id = 1;
