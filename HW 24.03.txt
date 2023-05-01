@@ -1,0 +1,36 @@
+HW 24.03	
+
+	 В рамках БД 'platform' напишите следующие запросы:
+
+(1) Вывести пользователей, у которых не укан email-адрес
+
+SELECT user_id, email FROM users
+WHERE email='' OR email is NULL
+
+(2) Вывести незаблокированных пользователей из Китая
+
+SELECT * FROM users
+WHERE
+	country='China' AND is_blocked=false;
+
+(3) Вывести стримы, авторы которых заблокированы
+
+SELECT *
+FROM streams
+JOIN users on streams.user_id=users.user_id
+WHERE users.is_blocked = true;
+
+(4) Вывести три последних реакции (включая имя_пользователя)
+
+SELECT
+	reactions.value, users.fullname
+FROM reactions
+JOIN users ON reactions.user_id=users.user_id
+ORDER BY reactions.created_at DESC
+LIMIT 3;
+
+(5) Вывести пожертвования заблокированных пользователей
+
+SELECT * FROM donations
+JOIN users ON donations.donator_id=users.user_id  
+WHERE users.is_blocked = true;
