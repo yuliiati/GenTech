@@ -1,0 +1,50 @@
+HW 24.04
+
+В рамках БД "platform" напишите след/запросы: 
+
+(1) ТОП-2 страны по сумме донатов
+
+SELECT
+    users.country,	
+    SUM(donations.amount) AS total_amount	
+FROM donations	
+LEFT JOIN users ON users.user_id=donations.donator_id	
+GROUP BY donations.donator_id	
+ORDER BY total_amount DESC	
+LIMIT 2;
+
+
+(2) Вывести рейтинг для каждого незавершенного стрима
+
+SELECT streams.title,
+	AVG(value) as average_rating
+FROM streams
+LEFT JOIN reactions ON reactions.reaction_id = streams.stream_id
+WHERE streams.is_completed = false
+GROUP BY streams.stream_id;
+
+(3) Вывести ТОП-1 донаторов (имя, сумма в долларах)
+
+SELECT users.fullname as donator_name, 
+	SUM(donations.amount) as total_donations
+FROM donations
+INNER JOIN users ON users.user_id = donations.donator_id
+GROUP BY users.user_id
+ORDER BY total_donations DESC
+LIMIT 1;
+
+(4) Вывести страны стримеров, у которых рейтинг ниже 2 
+
+SELECT DISTINCT users.country
+FROM streams
+INNER JOIN users ON users.user_id = streams.user_id
+LEFT JOIN reactions ON reactions.stream_id = streams.stream_id
+WHERE reactions.value < 2 OR reactions.value IS NULL;
+
+(5) Вывести имена пользователей и сколько оценок за все время они поставили
+
+SELECT users.fullname, 
+	COUNT(reactions.reaction_id) as reactions_count
+FROM users
+LEFT JOIN reactions ON reactions.user_id = users.user_id
+GROUP BY users.user_id;
