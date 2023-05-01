@@ -1,0 +1,36 @@
+HW 03.04
+
+(1) Описать связи между таблицами БД "песочница"
+
+1. Customers.CustomerID (1:М) Orders.CustomerID
+2. Orders.OrderID (1:М) OrderDetails.OrderID 
+3. Products.ProductID (1:М) OrderDetails.ProductID
+4. Suppliers.SupplierID (1:М) Products.SupplierID
+5. Employees.EmployeeID (1:М) Orders.EmployeeID
+6. Shippers.ShipperID (1:М) Orders.ShipperID
+
+
+(2) Вывести страны клиентов (БД platform)
+
+SELECT DISTINCT country
+FROM users;
+
+
+(3) Вывести пользователей без пароля (БД platform)
+
+SELECT *
+FROM users
+WHERE password IS NULL OR password = '';
+
+
+(4) Вывести страны донаторов с максимальным и минимальным пожертвованиями (БД platform)
+
+SELECT 
+    users.country AS Country,
+    MIN(Donations.Amount) AS Min,
+    MAX(Donations.Amount) AS Max
+FROM 
+    Donations
+    JOIN users ON donations.donator_id = users.country
+GROUP BY 
+    users.country;
