@@ -1,0 +1,87 @@
+GenTech 08.05.23 
+
+______________________________________________________________________________________
+
+В рамках БД "кинотеатр" выполнить след/запросы:
+
+______________________________________________________________________________________
+
+1. Вывести название самого посещаемого кинозала
+______________________________________________________________________________________
+
+SELECT
+	halls.name,
+	COUNT(*) AS quantity_tickets
+
+FROM tickets
+
+LEFT JOIN timetable ON timetable.timetable_id=tickets.timetable_id
+LEFT JOIN halls ON halls.hall_id=timetable.hall_id
+
+GROUP BY halls.hall_id
+
+ORDER BY quantity_tickets DESC
+LIMIT 1;
+______________________________________________________________________________________
+
+2. Вывести название и ко-во проданных билетов самого непопулярного фильма
+______________________________________________________________________________________
+
+select
+	movies.title
+	count(tickets.ticket_id) AS tickets_sold
+
+from movies
+
+left join timetable on timetable.movie_id = movies.movie_id
+left join tickets on tickets.timetable_id = timetable.timetable_id
+
+group by movies.movie_id
+
+order by tickets_sold ASC
+
+limit 1;
+
+______________________________________________________________________________________
+
+3. Вывести процент времени, который отводится рекламе в каждом сеансе.
+______________________________________________________________________________________
+
+select
+	(timetable.duration_minute - movies.duration_minute) / timetable.duration_minute * 100 as advertising_percent
+
+from timetable
+
+join movies on timetable.movie_id = movies.movie_id;
+______________________________________________________________________________________
+
+4. Вывести самый продолжительный фильм (название и продолжительность)
+______________________________________________________________________________________
+
+select
+	title,
+	duration_minute
+
+from movies
+
+order by duration_minute desc
+limit 1;
+______________________________________________________________________________________
+
+5. Вывести среднюю стоимость билета для каждого фильма (ср/стоимость и название фильма - проекция)
+______________________________________________________________________________________
+
+select
+	movies.title,
+	avg(tickets.cost) as avg_price
+
+from timetable
+
+join movies on timetable.movie_id = movies.movie_id
+join tickets on timetable.timetable_id = tickets.timetable_id
+
+group by movies.movie_id;
+______________________________________________________________________________________
+
+Конспект занятия
+https://western-appeal-39b.notion.site/GenTech-May-8-2023-5f627dafaa944f76bb4c13062e538370 
