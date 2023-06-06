@@ -1,0 +1,77 @@
+				GenTech 05.06.23
+_________________________________________________________________________________
+
+1. Установите СУБД MongoDB на свой компьютер.	☑
+
+_________________________________________________________________________________
+
+2. Опишите документ "кредит" с произвольными полями.
+_________________________________________________________________________________
+
+{
+   "_id": x23o00,
+   "loan_number": "LN123456",
+   "amount": 100000,
+   "start_date": ISODate("2022-06-01T00:00:00Z"),
+   "end_date": ISODate("2023-06-01T00:00:00Z"),
+   "interest_rate": 4.5,
+   "client": {
+      "name": "J",
+      "surname": "D",
+      "age": 23
+   },
+   "documents": [
+      {
+         "name": "passport",
+         "file": "https://example.com/documents/passport123.pdf"
+      },
+      {
+         "name": "income_proof",
+         "file": "https://example.com/documents/income_proof456.pdf"
+      }
+   ]
+}
+
+_________________________________________________________________________________
+
+3. Опишите документ "заказ" с произвольными полями.
+_________________________________________________________________________________
+
+{
+   "_id": x999,
+   "order_number": "BNKORD789012",
+   "order_date": ISODate("2023-06-01T10:30:00Z"),
+   "status": "Pending",
+   "total_amount": 2500.75,
+   "customer": {
+      "name": "Tommy",
+      "surname": "Lee",
+      "age": 23,
+      "address": {
+         "street": "123 Bank Street",
+         "city": "Berlin",
+         "country": "Germany"
+      },
+      "account_number": "ACCT123456789"
+   },
+   "items": [
+      {
+         "name": "Banking Software",
+         "price": 1000
+      },
+      {
+         "name": "Secure Tokens",
+         "price": 1500.75
+      }
+   ],
+   "payment": {
+      "method": "Credit Card",
+      "card_number": "1234-5678-9012-3456",
+      "expiry_date": "06/25",
+      "cvv": "123"
+   }
+}
+
+
+Конспект занятия
+https://western-appeal-39b.notion.site/GenTech-Jun-5-2023-0d5ef55a7c634fe2a7391563e31bd524?pvs=4 
