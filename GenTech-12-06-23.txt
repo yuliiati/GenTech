@@ -1,0 +1,136 @@
+В рамках БД "банк" напишите след/запросы:
+_______________________________________________________________________12.06.2023_________________________
+
+1. Создать несколько транзакций
+________________________________________________insertOne_______________________________________
+db.txs.insertOne({
+    'id': 'tx0001',
+    'created_at': new Date(),
+    'sender_id': 'x888',
+    'recipient_id': 'terminator1985',
+    'amount': 500.5,
+    'currency': 'eur',
+    'comment': 'just for fun',
+    'is_completed': true
+})
+db.txs.insertOne({
+    'id': 'tx0002',
+    'created_at': new Date(),
+    'sender_id': 'x111',
+    'recipient_id': 'terminator1985',
+    'amount': 10000,
+    'currency': 'eur',
+    'comment': '10 k',
+    'is_completed': true
+})
+db.txs.insertOne({
+    'id': 'tx0003',
+    'created_at': new Date(),
+    'sender_id': 'x666',
+    'recipient_id': 'terminator1985',
+    'amount': 222.22,
+    'currency': 'usd',
+    'comment': 'also fun :))))))))))))))',
+    'is_completed': false
+})
+______________________________________________________________insertMany_______________________________
+db.txs.insertMany([
+    {
+        'id': 'tx0001',
+        'created_at': new Date(),
+        'sender_id': 'x888',
+        'recipient_id': 'terminator1985',
+        'amount': 500.5,
+        'currency': 'eur',
+        'comment': 'just for fun',
+        'is_completed': true
+    },
+    {
+        'id': 'tx0002',
+        'created_at': new Date(),
+        'sender_id': 'x111',
+        'recipient_id': 'terminator1985',
+        'amount': 10000,
+        'currency': 'eur',
+        'comment': '10 k',
+        'is_completed': true
+    },
+    {
+        'id': 'tx0003',
+        'created_at': new Date(),
+        'sender_id': 'x666',
+        'recipient_id': 'terminator1985',
+        'amount': 222.22,
+        'currency': 'usd',
+        'comment': 'also fun :))))))))))))))',
+        'is_completed': false
+    }
+])
+
+_______________________________________________________________________________________
+
+2. Вывести только завершенные транзакции от 100 EUR
+_______________________________________________________________________________________
+
+db.txs.find(
+    {
+        $and: [
+            { amount: { $gte: 100 } },
+            { is_completed: true }
+        ]
+    }
+)
+_______________________________________________________________________________________
+
+3. Вывести незаблокированных пользователей из Germany и China с балансом до 10000
+_______________________________________________________________________________________
+
+db.clients.find(
+    { // filter
+        country: {$in: ['Germany', 'China']},
+        is_blocked: {$ne: true},
+        amount: {$lte: 10000}
+    }
+)
+*		*		*		*		*
+db.clients.find(
+    {
+        $and: [
+        {country: { $in: ['Germany', 'China'] }},
+        {is_blocked: { $ne: false }},
+        { amount: { $lte: 10000 }}
+        ]
+    }
+)
+
+_______________________________________________________________________________________
+
+4. У звонков с продолжительностью до 1 часа удалить темы money и important
+_______________________________________________________________________________________
+
+db.calls.updateMany(
+    {
+        duration_secs: { $lte: 60 * 60 } 
+    },
+    {
+        $pullAll: { topics: ['money', 'important'] }
+    }
+);
+_______________________________________________________________________________________
+
+5. Ко всем звонкам добавить темы checked и new
+_______________________________________________________________________________________
+
+db.calls.updateMany(
+    {}, // filter
+    { // action
+        $addToSet: {
+            topics: {$each: ['checked', 'new']}
+        }
+    }
+)
+_______________________________________________________________________________________
+
+
+Конспект занятия
+https://western-appeal-39b.notion.site/GenTech-Jun-12-2023-7fcfb45ee64d4860b7d2a161838e718d?pvs=4 
