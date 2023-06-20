@@ -1,0 +1,85 @@
+					GenTech_19.06.23
+
+В рамках БД "веб-чат" напишите след/запросы:
+
+
+1. Вывести одного юзера с самым большим балансом (проекция: имя):
+_________________________________________________________________
+db.users.aggregate([
+    {
+        $sort: {
+            balance: -1
+        }
+    },
+    {$limit: 1},
+      {
+        $project: {
+            fullname: 1,
+            _id: 0
+        }
+    }
+])
+
+2. Указать юзерам 1 и 2 страну USA:
+
+db.users.updateMany(
+  { user_id: { $in: [1, 2] } },
+  { $set: { country: 'USA' } }
+)
+
+
+3. Вывести все транзакции, где получателем являются юзеры из USA:
+_________________________________________________________________
+db.transactions.aggregate([
+  {
+    $lookup: {
+      from: "users", // название коллекции
+      localField: "recipient_id", // внешний ключ в transactions
+      foreignField: "user_id", // первичный ключ в users
+      as: "recipient" // результат поместить в поле
+    }
+  },
+  {
+    $match: {
+      "recipient.country": "USA"
+    }
+  }
+])
+
+4. Вывести все USD-транзакции незаблокированных юзеров не из USA:
+_________________________________________________________________
+db.transactions.aggregate([
+  {
+    $match: {
+      $and: [
+        { is_blocked: { $ne: true } },
+        { country: { $ne: "USA" } },
+        { currency: {$eq: 'usd'}}
+      ]
+    }
+  }
+])
+
+5. Вывести все транзакции, где отправителем являются юзеры не из USA:
+_____________________________________________________________________
+db.transactions.aggregate([
+  {
+    $lookup: {
+      from: "users",
+      localField: "sender_id",
+      foreignField: "user_id",
+      as: "sender"
+    }
+  },
+  {
+    $match: {
+      "sender.country": { $ne: "USA" }
+    }
+  }
+])
+
+
+_____________________________________________________________________
+Конспект занятия
+https://western-appeal-39b.notion.site/GenTech-Jun-19-2023-4b6a59cd8a6a4a9884808d7a4bd968fe?pvs=4 
+
